@@ -3,6 +3,7 @@ import { GameState, useGame } from "../hooks/useGame"
 import { useSettings } from "../hooks/useSettings"
 import {
   ACTION_CLEAR,
+  ACTION_GIVE,
   ACTION_PUSH,
   ACTION_REMOVE,
   ACTION_SET,
@@ -653,9 +654,19 @@ const Grid = ({
     },
     [renderNow],
   )
-
+  // marker key down event
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
+
+      if (e.key === "Enter") {
+        updateGame({
+          type: TYPE_DIGITS,
+          action: ACTION_GIVE
+        })
+        e.preventDefault();
+        return;  
+      }
+
       let digit = e.code.match("Digit([0-9])")
       if (digit) {
         let nd = +digit[1]
@@ -681,7 +692,7 @@ const Grid = ({
       if (e.key === "Backspace" || e.key === "Delete" || e.key === "Clear") {
         updateGame({
           type: TYPE_DIGITS,
-          action: ACTION_REMOVE,
+          action: ACTION_REMOVE
         })
       }
     },

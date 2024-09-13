@@ -75,7 +75,7 @@ const IndexPage = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false)
 
   function onMouseDown(e: MouseEvent<HTMLDivElement>) {
-    // check if we hit a target that would clear the selction
+    // check if we hit a target that would clear the selection
     let shouldClearSelection =
       e.target === appRef.current ||
       e.target === gameContainerRef.current ||
@@ -244,7 +244,7 @@ const IndexPage = () => {
     },
     [loadCompressedPuzzleFromString, loadFromTest, updateGame],
   )
-
+  
   // load game data
   useEffect(() => {
     if (game.data.cells.length > 0) {

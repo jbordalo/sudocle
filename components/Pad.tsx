@@ -110,6 +110,7 @@ const Pad = () => {
   }
 
   function onMode(mode: Mode) {
+    console.log("onMode")
     updateGame({
       type: TYPE_MODE,
       action: ACTION_SET,

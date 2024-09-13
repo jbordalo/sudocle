@@ -4,6 +4,7 @@ import {
   ACTION_ALL,
   ACTION_CLEAR,
   ACTION_DOWN,
+  ACTION_GIVE,
   ACTION_LEFT,
   ACTION_PUSH,
   ACTION_REMOVE,
@@ -445,6 +446,46 @@ function digitsReducer(
       break
     }
 
+    case ACTION_GIVE: {
+      console.log("ACTION_GIVE@digitReducer");
+      // TODO this is terrible code, try to just update the digit
+      for (let sc of selection) {
+        let oldDigit = digits.get(sc);
+        if (oldDigit !== undefined) {
+          digits.set(sc, {
+            digit: oldDigit.digit,
+            given: true,
+            discovered: true
+          })
+        }
+      }
+
+      if (action.digit !== undefined) {
+        for (let sc of selection) {
+          let oldDigit = digits.get(sc)
+          if (oldDigit !== undefined && oldDigit.given) {
+            if (oldDigit.digit === action.digit) {
+              digits.set(sc, {
+                digit: action.digit,
+                given: true,
+                discovered: true,
+              })
+              changed = true
+            }
+          } else {
+            console.log("Giving")
+            digits.set(sc, {
+              digit: action.digit,
+              given: true,
+              discovered: false,
+            })
+            changed = true
+          }
+        }
+      }
+      break
+    }
+
     case ACTION_REMOVE: {
       for (let sc of selection) {
         let oldDigit = digits.get(sc)
@@ -554,10 +595,10 @@ function selectionReducer(
       if (action.k !== undefined) {
         if (Array.isArray(action.k)) {
           for (let k of action.k) {
-            selection.add(k)
+            if (!selection.delete(k)) selection.add(k)
           }
         } else {
-          selection.add(action.k)
+          if (!selection.delete(action.k)) selection.add(action.k)
         }
       }
       return

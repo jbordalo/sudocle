@@ -17,6 +17,7 @@ export const TYPE_PAUSE = "pause"
 
 export const ACTION_ALL = "all"
 export const ACTION_SET = "set"
+export const ACTION_GIVE = "give"
 export const ACTION_PUSH = "push"
 export const ACTION_CLEAR = "clear"
 export const ACTION_REMOVE = "remove"
@@ -43,7 +44,7 @@ export interface ModeGroupAction {
 
 export interface DigitsAction {
   readonly type: typeof TYPE_DIGITS
-  readonly action: typeof ACTION_SET | typeof ACTION_REMOVE
+  readonly action: typeof ACTION_SET | typeof ACTION_REMOVE | typeof ACTION_GIVE
   readonly digit?: number
 }
 
@@ -65,6 +66,7 @@ export interface SelectionAction {
     | typeof ACTION_ALL
     | typeof ACTION_CLEAR
     | typeof ACTION_SET
+    | typeof ACTION_GIVE
     | typeof ACTION_PUSH
     | typeof ACTION_REMOVE
     | typeof ACTION_RIGHT
